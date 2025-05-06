@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://0f4k7kkfpsad"]
+
+[ext_resource type="Texture2D" uid="uid://c3rv5rdt638tu" path="res://assets/sprites/ui/mana_bar.png" id="1_54tea"]
+[ext_resource type="Texture2D" uid="uid://bhsi8ugs6q1q5" path="res://assets/sprites/ui/mana.png" id="2_2okaj"]
+[ext_resource type="Script" uid="uid://71cp0esnr65v" path="res://scripts/gui/ManaBar.gd" id="2_66i44"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="mana_bar" type="TextureProgressBar" parent="."]
+z_index = 100
+layout_mode = 1
+offset_right = 96.0
+offset_bottom = 42.0
+step = 0.1
+value = 99.9
+stretch_margin_left = 26
+stretch_margin_top = 13
+stretch_margin_right = 37
+stretch_margin_bottom = 16
+texture_progress = ExtResource("2_2okaj")
+texture_progress_offset = Vector2(13, 13)
+script = ExtResource("2_66i44")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+z_index = 99
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 42.0
+texture = ExtResource("1_54tea")
+region_rect = Rect2(0, 0, 128, 42)
+patch_margin_left = 26
+patch_margin_top = 13
+patch_margin_right = 37
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
