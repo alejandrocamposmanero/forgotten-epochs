@@ -31,7 +31,7 @@ func enter() -> void:
 func process_input() -> State:
 	if move_component.wants_jump() and coyote_timer > 0 and parent.jump_number < 1:
 		return jump_state
-	if move_component.wants_jump() and parent.jump_number < 2:
+	if move_component.wants_jump() and parent.jump_number < 2 and !parent.attacking:
 		return double_jump_state
 	if move_component.wants_dash() and parent.can_dash:
 		return dash_state

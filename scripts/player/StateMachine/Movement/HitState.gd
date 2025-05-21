@@ -29,7 +29,7 @@ func process_physics(delta: float) -> State:
 		return fall_state
 	if hitted:
 		return idle
-	return idle
+	return null
 
 func _on_animation_hit_finished() -> void:
 	if parent.animation.animation == "hit" or parent.animation.animation == "fire_hit":

@@ -9,11 +9,11 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r37li"]
 texture = ExtResource("1_fii6h")
-texture_margin_left = 32.0
-texture_margin_top = 32.0
-texture_margin_right = 32.0
-texture_margin_bottom = 32.0
-region_rect = Rect2(16, 584, 304, 176)
+texture_margin_left = 31.0
+texture_margin_top = 31.0
+texture_margin_right = 31.0
+texture_margin_bottom = 31.0
+region_rect = Rect2(16, 586, 301, 172)
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -53,13 +53,32 @@ text = "Forgotten Epochs"
 [node name="Play" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Options")
+focus_next = NodePath("../Options")
+focus_previous = NodePath("../Quit")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 27
 text = "Play"
 
+[node name="Load" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Options")
+focus_next = NodePath("../Options")
+focus_previous = NodePath("../Quit")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 27
+text = "Load game"
+
 [node name="Options" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
+focus_neighbor_top = NodePath("../Play")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Play")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 27
 text = "Options"
@@ -67,6 +86,10 @@ text = "Options"
 [node name="Quit" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
+focus_neighbor_top = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../Play")
+focus_next = NodePath("../Play")
+focus_previous = NodePath("../Options")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 27
 text = "Quit"
@@ -96,5 +119,6 @@ texture = ExtResource("6_y3x05")
 centered = false
 
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

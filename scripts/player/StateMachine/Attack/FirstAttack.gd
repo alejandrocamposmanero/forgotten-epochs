@@ -18,8 +18,9 @@ var attack_finished : bool = false
 
 func enter() -> void:
 	super()
+	parent.sword_visible()
 	collision.set_deferred("disabled", false)
-	attack_finished = false
+	parent.attacking = true
 	parent.attack_number = 1
 
 func process_input() -> State: 
@@ -32,7 +33,7 @@ func process_frame(delta: float) -> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	if attack_finished:
+	if !parent.attacking:
 		if attack_buffer_timer > 0:
 			if parent.is_on_floor():
 				return attack2
@@ -42,8 +43,8 @@ func process_physics(delta: float) -> State:
 	return null
 
 
-func _on_animation_animation_finished() -> void:
-	attack_finished = true
-	if parent.animation.animation == "attack1" or parent.animation.animation == "fire_attack1":
+func _on_animation_attack1_finished() -> void:
+	parent.attacking = false
+	if parent.sword_animation.animation == "attack1" or parent.sword_animation.animation == "fire_attack1":
 		collision.set_deferred("disabled", true)
 		

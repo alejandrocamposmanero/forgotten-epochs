@@ -1,0 +1,15 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://0yoo8prrcwyc"
+valid=false
+
+[deps]
+
+source_file="res://saved_data/levels_last_positions.csv"
+
+[params]
+
+compress=true
+delimiter=0

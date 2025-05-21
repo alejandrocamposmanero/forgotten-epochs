@@ -13,7 +13,7 @@ var dash_state: State
 var transform_state : State
 
 func process_input() -> State:
-	if get_jump() and parent.is_on_floor():
+	if get_jump() and parent.is_on_floor() and !parent.attacking:
 		return jump_state
 	if get_dash() and parent.can_dash:
 		return dash_state
@@ -22,7 +22,7 @@ func process_input() -> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	if !parent.dead:
+	if !parent.dead and !parent.attacking:
 		parent.can_dash = !parent.is_dash_cooldown
 		parent.jump_number = 0
 		parent.velocity.y += gravity * delta

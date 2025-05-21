@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://20xbjiy7rthm"]
+[gd_scene load_steps=5 format=3 uid="uid://20xbjiy7rthm"]
 
 [ext_resource type="PackedScene" uid="uid://b4f8e8txjnn5e" path="res://scenes/gui/health_bar.tscn" id="1_624ws"]
+[ext_resource type="Script" uid="uid://bol508wdgr53b" path="res://scripts/gui/Hud.gd" id="1_qxonp"]
 [ext_resource type="PackedScene" uid="uid://0f4k7kkfpsad" path="res://scenes/gui/mana_bar.tscn" id="2_qxonp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qxonp"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -10,15 +13,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_qxonp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="health_bar" parent="CanvasLayer" instance=ExtResource("1_624ws")]
+offset_left = 48.0
+offset_top = 39.0
+offset_right = 88.0
+offset_bottom = 79.0
 scale = Vector2(2, 2)
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
 [node name="mana_bar" parent="CanvasLayer" instance=ExtResource("2_qxonp")]
-offset_top = 56.0
-offset_bottom = 96.0
+offset_left = 48.0
+offset_top = 95.0
+offset_right = 88.0
+offset_bottom = 135.0
 scale = Vector2(2, 2)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_qxonp")

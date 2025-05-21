@@ -11,13 +11,14 @@ var idle : State
 var attack_buffer_time : float = 0.1
 
 var attack_buffer_timer : float
-var attack_finished : bool = false
 
 func enter() -> void:
 	super()
+	parent.sword_visible()
+	collision.set_deferred("disabled", false)
 	attack_buffer_timer = attack_buffer_time
 	parent.attack_number = 2
-	attack_finished = false
+	parent.attacking = true
 
 func process_input() -> State: 
 	if move_component.wants_basic_attack():
@@ -29,14 +30,14 @@ func process_frame(delta: float)-> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	if attack_finished:
+	if !parent.attacking:
 		if attack_buffer_timer > 0:
 			if !parent.is_on_floor():
 				return jump_attack
 		return idle
 	return null
 
-func _on_animation_animation_finished() -> void:
-	attack_finished = true
-	if parent.animation.animation == "attack3" or parent.animation.animation == "fire_attack3":
+func _on_animation_attack3_finished() -> void:
+	parent.attacking = false
+	if parent.sword_animation.animation == "attack3" or parent.sword_animation.animation == "fire_attack3":
 		collision.set_deferred("disabled", true)

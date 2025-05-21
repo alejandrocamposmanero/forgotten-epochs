@@ -5,6 +5,8 @@ signal player_death
 
 @onready
 var animation := $animation
+@onready 
+var sword_animation := $sword_animation
 @onready
 var move_state_machine := $move_state_machine
 @onready 
@@ -22,10 +24,6 @@ var hit_state: State
 @export
 var transformed := false
 @export
-var total_health : int = 100
-@export
-var total_mana : int = 100
-@export
 var damage : int = 10
 
 var attack_number := 0
@@ -36,6 +34,14 @@ var is_dash_cooldown := false
 var dead := false
 var attacking := false
 
+func sword_visible() -> void:
+	sword_animation.visible = true
+	animation.visible = false
+
+func sword_invisible() -> void:
+	sword_animation.visible = false
+	animation.visible = true
+
 func receive_damage(damage_done: int) -> void:
 	Data.player_health -= damage_done
 	if Data.player_health <= 0:
@@ -44,11 +50,11 @@ func receive_damage(damage_done: int) -> void:
 		move_state_machine.change_state(hit_state)
 	
 func _ready() -> void:
-	Data.player_health = total_health
-	Data.player_mana = total_mana
+	transformed = Data.transformed
+	
 	dead = false
 	move_state_machine.init(self, animation, move_component)
-	attack_state_machine.init(self, animation, move_component)
+	attack_state_machine.init(self, sword_animation, move_component)
 
 func _unhandled_input(_event: InputEvent) -> void:
 	move_state_machine.process_input()
@@ -57,12 +63,21 @@ func _unhandled_input(_event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	move_state_machine.process_physics(delta)
 	attack_state_machine.process_physics(delta)
+	Data.transformed = transformed
 	if transformed:
 		Data.player_mana -= delta
 
 func _process(delta: float) -> void:
 	move_state_machine.process_frame(delta)
 	attack_state_machine.process_frame(delta)
+	sword_animation.flip_h = animation.flip_h
+	if Data.can_save:
+		Data.player_posx = position.x
+		Data.player_posy = position.y
+	if Data.loaded_game:
+		position.x = Data.player_posx
+		position.y = Data.player_posy
+		Data.loaded_game = false
 
 func _on_dash_cooldown_timeout() -> void:
 	is_dash_cooldown = false
