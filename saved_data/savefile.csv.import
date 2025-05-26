@@ -6,10 +6,10 @@ uid="uid://yeg2372j2g8k"
 
 [deps]
 
-files=["res://saved_data/savefile.552.376770019531.translation", "res://saved_data/savefile.168.933822631836.translation"]
+files=["res://saved_data/savefile.525.023620605469.translation", "res://saved_data/savefile.168.933822631836.translation"]
 
 source_file="res://saved_data/savefile.csv"
-dest_files=["res://saved_data/savefile.552.376770019531.translation", "res://saved_data/savefile.168.933822631836.translation"]
+dest_files=["res://saved_data/savefile.525.023620605469.translation", "res://saved_data/savefile.168.933822631836.translation"]
 
 [params]
 

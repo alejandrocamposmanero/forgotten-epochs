@@ -25,6 +25,10 @@ var hit_state: State
 var transformed := false
 @export
 var damage : int = 10
+@export
+var health: int = 100
+@export
+var mana: float = 100
 
 var attack_number := 0
 var jump_number := 0
@@ -43,15 +47,14 @@ func sword_invisible() -> void:
 	animation.visible = true
 
 func receive_damage(damage_done: int) -> void:
-	Data.player_health -= damage_done
-	if Data.player_health <= 0:
+	health -= damage_done
+	if health <= 0:
 		move_state_machine.change_state(death_state)
 	else:
 		move_state_machine.change_state(hit_state)
 	
 func _ready() -> void:
 	transformed = Data.transformed
-	
 	dead = false
 	move_state_machine.init(self, animation, move_component)
 	attack_state_machine.init(self, sword_animation, move_component)
@@ -65,12 +68,14 @@ func _physics_process(delta: float) -> void:
 	attack_state_machine.process_physics(delta)
 	Data.transformed = transformed
 	if transformed:
-		Data.player_mana -= delta
+		mana -= delta
 
 func _process(delta: float) -> void:
 	move_state_machine.process_frame(delta)
 	attack_state_machine.process_frame(delta)
 	sword_animation.flip_h = animation.flip_h
+	Data.player_health = health
+	Data.player_mana = mana
 	if Data.can_save:
 		Data.player_posx = position.x
 		Data.player_posy = position.y

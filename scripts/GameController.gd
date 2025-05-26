@@ -7,7 +7,7 @@ var world_2d: Node2D
 var gui: Control
 
 @onready 
-var hud: Control = $gui/HUD
+var level_transition: Control = $level_transition
 
 var current_2d_scene: Node2D
 var current_gui_scene: Control
@@ -18,28 +18,32 @@ func _ready() -> void:
 	Global.game_controller = self
 	current_gui_scene = $gui/UI
 
-func show_hud() -> void:
-	hud.visible = true
+func start_transition() -> void:
+	level_transition.visible = true
+	level_transition.transition("fade out", 1)
 
-func hide_hud() -> void:
-	hud.visible = false
+func end_transition() -> void:
+	level_transition.transition("fade in", 1.5)
 
-func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
+func change_gui_scene(new_scene: String, deferred: bool = false, delete: bool = true, keep_running: bool = false) -> void:
 	if current_gui_scene != null:
 		if delete:
 			current_gui_scene.queue_free()
 		elif keep_running:
 			current_gui_scene.visible = false
 		else:
-			gui.remove_child(current_gui_scene)
+			gui.call_deferred("remove_child", current_gui_scene)
 	if new_scene != "":
 		var new = load(new_scene).instantiate() as Control
-		gui.call_deferred("add_child", new)
+		if deferred:
+			gui.call_deferred("add_child", new)
+		else:
+			gui.add_child(new)
 		current_gui_scene = new
 	else:
 		current_gui_scene = null
 
-func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
+func change_2d_scene(new_scene: String, deferred: bool = false, delete: bool = true, keep_running: bool = false) -> void:
 	if current_2d_scene != null:
 		if delete:
 			current_2d_scene.queue_free()
@@ -47,15 +51,14 @@ func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool 
 			previous_2d_scenes[current_2d_scene.name] = current_2d_scene
 			current_2d_scene.visible = false
 		else:
-			world_2d.remove_child(current_2d_scene)
+			world_2d.call_deferred("remove_child", current_2d_scene)
 	if new_scene != "":
 		var new = load(new_scene).instantiate() as Node2D
-		world_2d.call_deferred("add_child", new)
-		if previous_2d_scenes.find_key(new.name):
-			new = previous_2d_scenes[new.name]
-			new.visible = true
+		if deferred:
+			world_2d.call_deferred("add_child", new)
+		else:
+			world_2d.add_child(new)
 		current_2d_scene = new
-		
 	else:
 		current_2d_scene = null
 
@@ -93,14 +96,15 @@ func load_game() -> void:
 	if !FileAccess.file_exists("res://saved_data/savefile.csv"):
 		return
 	var content = save_file.get_csv_line()
+	start_transition()
 	change_2d_scene(content[0])
 	change_gui_scene("")
-	show_hud()
 	Data.level_last_position = load_last_level_position()
 	Data.player_posx = float(content[1])
 	Data.player_posy = float(content[2])
 	Data.loaded_game = true
+	end_transition()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause") and (current_gui_scene == null or current_gui_scene.name != "UI"):
 		change_gui_scene("res://scenes/gui/pause_menu.tscn", false, true)

@@ -1,0 +1,110 @@
+[gd_scene load_steps=8 format=3 uid="uid://de7lcyglfpw"]
+
+[ext_resource type="Texture2D" uid="uid://cl1m14s35ar8d" path="res://assets/sprites/ui/artdecoUI_PIPO_wb.png" id="1_i4tqe"]
+[ext_resource type="Script" uid="uid://cojs8un4imb75" path="res://scripts/gui/MultiplayerMenu.gd" id="1_ow8fk"]
+[ext_resource type="Texture2D" uid="uid://bj16mxwqca8n" path="res://assets/sprites/background/bg_2.png" id="2_ow8fk"]
+[ext_resource type="Texture2D" uid="uid://ceqgjghs5r3ef" path="res://assets/sprites/background/background.png" id="3_gfv8b"]
+[ext_resource type="Texture2D" uid="uid://eicuogsa8vr5" path="res://assets/sprites/background/bg_1.png" id="4_5p2lg"]
+[ext_resource type="Texture2D" uid="uid://mse45vo2a2a" path="res://assets/sprites/background/fg_1.png" id="5_r3d7b"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_olmso"]
+texture = ExtResource("1_i4tqe")
+texture_margin_left = 31.0
+texture_margin_top = 31.0
+texture_margin_right = 31.0
+texture_margin_bottom = 31.0
+region_rect = Rect2(16, 586, 301, 172)
+
+[node name="multiplayer_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ow8fk")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -345.0
+offset_top = -215.0
+offset_right = 355.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_olmso")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 54
+text = "Multiplayer mode"
+
+[node name="host" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+focus_neighbor_top = NodePath("../back")
+focus_neighbor_bottom = NodePath("../join")
+focus_next = NodePath("../join")
+focus_previous = NodePath("../back")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 27
+text = "Host a game"
+
+[node name="join" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+focus_neighbor_bottom = NodePath("../back")
+focus_next = NodePath("../back")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 27
+text = "Join to a game"
+
+[node name="back" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+focus_neighbor_top = NodePath("../join")
+focus_previous = NodePath("../join")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 27
+text = "Back"
+
+[node name="background" type="Node2D" parent="CanvasLayer"]
+
+[node name="Bg2" type="Sprite2D" parent="CanvasLayer/background"]
+z_index = -98
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("2_ow8fk")
+centered = false
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer/background"]
+z_index = -100
+scale = Vector2(4.5, 4.511)
+texture = ExtResource("3_gfv8b")
+centered = false
+
+[node name="Bg1" type="Sprite2D" parent="CanvasLayer/background"]
+z_index = -99
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("4_5p2lg")
+centered = false
+
+[node name="Fg1" type="Sprite2D" parent="CanvasLayer/background"]
+z_index = -97
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("5_r3d7b")
+centered = false
+
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/back" to="." method="_on_back_pressed"]

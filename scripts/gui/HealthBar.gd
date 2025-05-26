@@ -7,7 +7,7 @@ func _ready() -> void:
 	total_health = 100
 	self.value = Data.player_health
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	self.value = Data.player_health
 	if self.value > total_health:
 		self.value = total_health

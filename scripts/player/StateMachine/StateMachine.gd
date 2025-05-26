@@ -22,6 +22,7 @@ func change_state(new_state: State) -> void:
 	current_state.enter()
 
 func process_physics(delta: float) -> void:
+	@warning_ignore("redundant_await")
 	var new_state = await current_state.process_physics(delta)
 	if new_state:
 		change_state(new_state)

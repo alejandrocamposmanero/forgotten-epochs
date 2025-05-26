@@ -1,0 +1,302 @@
+[gd_scene load_steps=28 format=3 uid="uid://b4wbfbrfd10sb"]
+
+[ext_resource type="Script" uid="uid://bl67kxcdibgc" path="res://scripts/multiplayer/MultiplayerController.gd" id="1_iw3y3"]
+[ext_resource type="PackedScene" uid="uid://cngb5x8dbqg8t" path="res://scenes/camera_2d.tscn" id="2_k1prj"]
+[ext_resource type="Script" uid="uid://bds6bde0w0mnm" path="res://scripts/multiplayer/MultiplayerInput.gd" id="2_o4dim"]
+[ext_resource type="SpriteFrames" uid="uid://60jyjtnuvjxc" path="res://assets/sprites/player/player_move.tres" id="3_o4dim"]
+[ext_resource type="SpriteFrames" uid="uid://cchqdtdhgt4v3" path="res://assets/sprites/player/player_sword.tres" id="4_gh1gt"]
+[ext_resource type="Script" uid="uid://dat0r3t8b5yos" path="res://scripts/player/sword_attack.gd" id="5_xrg5s"]
+[ext_resource type="Script" uid="uid://b34yujcl8iupt" path="res://scripts/multiplayer/state_machine/MultiplayerStateMachine.gd" id="7_kly25"]
+[ext_resource type="Script" uid="uid://ccr5yvleb011l" path="res://scripts/multiplayer/state_machine/Movement/MultiIdleState.gd" id="8_rlh20"]
+[ext_resource type="Script" uid="uid://cq6mnqvmp5v8g" path="res://scripts/multiplayer/state_machine/Movement/MultiJumpState.gd" id="9_lk1fo"]
+[ext_resource type="Script" uid="uid://dgoxx6owup3k0" path="res://scripts/multiplayer/state_machine/Movement/MultiFallState.gd" id="10_1kha8"]
+[ext_resource type="Script" uid="uid://bd57bkew76fbb" path="res://scripts/multiplayer/state_machine/Movement/MultiDashState.gd" id="11_1kha8"]
+[ext_resource type="Script" uid="uid://lj0ksgrsrmjs" path="res://scripts/multiplayer/state_machine/Movement/MultiMoveState.gd" id="11_h0mtj"]
+[ext_resource type="Script" uid="uid://docspcmscd5h1" path="res://scripts/multiplayer/state_machine/Movement/MultiDoubleJumpState.gd" id="13_h0mtj"]
+[ext_resource type="Script" uid="uid://di3svw4n8ep3e" path="res://scripts/multiplayer/state_machine/Movement/MultiTransformState.gd" id="14_po5r7"]
+[ext_resource type="Script" uid="uid://b3ygru4py5ec3" path="res://scripts/multiplayer/state_machine/Movement/MultiHitState.gd" id="15_ssbp6"]
+[ext_resource type="Script" uid="uid://ctiiex7y8057i" path="res://scripts/multiplayer/state_machine/Movement/MultiDeathState.gd" id="15_ucr0r"]
+[ext_resource type="Script" uid="uid://dkc4y3gs1syer" path="res://scripts/multiplayer/state_machine/Attack/MultiIdle.gd" id="17_ec1dl"]
+[ext_resource type="Script" uid="uid://tohxuln383tj" path="res://scripts/multiplayer/state_machine/Attack/MultiFirstAttack.gd" id="18_k1prj"]
+[ext_resource type="Script" uid="uid://cw32wtstqw0ha" path="res://scripts/multiplayer/state_machine/Attack/MultiSecondAttack.gd" id="19_o4dim"]
+[ext_resource type="Script" uid="uid://djyvu1gf2vjue" path="res://scripts/multiplayer/state_machine/Attack/MultiThirdAttack.gd" id="20_gh1gt"]
+[ext_resource type="Script" uid="uid://cbb71ttg2f7e3" path="res://scripts/multiplayer/state_machine/Attack/MultiJumpAttack.gd" id="21_xrg5s"]
+[ext_resource type="PackedScene" uid="uid://20xbjiy7rthm" path="res://scenes/gui/hud.tscn" id="22_k1prj"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o4dim"]
+properties/0/path = NodePath(".:player_id")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:do_jump")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:do_dash")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:do_transform")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:do_attack")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:_is_on_floor")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("animation:animation")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("sword_animation:animation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("animation:flip_h")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("animation:visible")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("sword_animation:visible")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("sword_animation:flip_h")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("sword_animation:frame")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath("animation:frame")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gh1gt"]
+properties/0/path = NodePath("InputSynchronizer:direction")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k1prj"]
+radius = 2.4
+height = 8.8
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o4dim"]
+radius = 13.0
+height = 32.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gh1gt"]
+radius = 13.0
+
+[node name="MultiplayerPlayer" type="CharacterBody2D" node_paths=PackedStringArray("death_state", "hit_state")]
+script = ExtResource("1_iw3y3")
+death_state = NodePath("move_state_machine/death")
+hit_state = NodePath("move_state_machine/hit")
+
+[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_o4dim")
+
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_gh1gt")
+script = ExtResource("2_o4dim")
+
+[node name="Camera2D" parent="." instance=ExtResource("2_k1prj")]
+
+[node name="animation" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_o4dim")
+animation = &"fire_fall"
+
+[node name="sword_animation" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("4_gh1gt")
+animation = &"attack1"
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+scale = Vector2(5, 5)
+shape = SubResource("CapsuleShape2D_k1prj")
+
+[node name="sword_collision" type="Area2D" parent="." node_paths=PackedStringArray("parent")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("5_xrg5s")
+parent = NodePath("..")
+
+[node name="attack1" type="CollisionShape2D" parent="sword_collision"]
+position = Vector2(23, -3)
+shape = SubResource("CapsuleShape2D_o4dim")
+disabled = true
+debug_color = Color(0.576471, 0.411765, 0.937255, 1)
+
+[node name="attack2" type="CollisionPolygon2D" parent="sword_collision"]
+position = Vector2(1, 0)
+polygon = PackedVector2Array(5, 4, 44, 15, 40, -15, 15, -29, -12, -32, 22, -16, 25, 2)
+disabled = true
+
+[node name="attack3" type="CollisionPolygon2D" parent="sword_collision"]
+polygon = PackedVector2Array(58, 2, 13, -5, 10, 11, 57, 5)
+disabled = true
+
+[node name="jump_attack" type="CollisionShape2D" parent="sword_collision"]
+position = Vector2(19, -7)
+shape = SubResource("CapsuleShape2D_gh1gt")
+disabled = true
+debug_color = Color(0.75647, 0.452721, 0.119699, 0.42)
+
+[node name="move_state_machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_kly25")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="move_state_machine" node_paths=PackedStringArray("jump_state", "fall_state", "move_state", "dash_state", "transform")]
+script = ExtResource("8_rlh20")
+jump_state = NodePath("../jump")
+fall_state = NodePath("../fall")
+move_state = NodePath("../move")
+dash_state = NodePath("../dash")
+transform = NodePath("../transform")
+animation_name = "idle"
+fire_animation_name = "fire_idle"
+
+[node name="jump" type="Node" parent="move_state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "move_state", "double_jump_state", "dash_state")]
+script = ExtResource("9_lk1fo")
+fall_state = NodePath("../fall")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+double_jump_state = NodePath("../double_jump")
+dash_state = NodePath("../dash")
+animation_name = "jump"
+fire_animation_name = "fire_jump"
+move_speed = 150.0
+
+[node name="fall" type="Node" parent="move_state_machine" node_paths=PackedStringArray("double_jump_state", "idle_state", "move_state", "dash_state", "transform_state", "jump_state")]
+script = ExtResource("10_1kha8")
+double_jump_state = NodePath("../double_jump")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+dash_state = NodePath("../dash")
+transform_state = NodePath("../transform")
+jump_state = NodePath("../jump")
+animation_name = "fall"
+fire_animation_name = "fire_fall"
+
+[node name="dash" type="Node" parent="move_state_machine" node_paths=PackedStringArray("move_state", "fall_state", "idle_state", "jump_state", "transform_state")]
+script = ExtResource("11_1kha8")
+move_state = NodePath("../move")
+dash_time = 0.25
+fall_state = NodePath("../fall")
+idle_state = NodePath("../idle")
+jump_state = NodePath("../jump")
+transform_state = NodePath("../transform")
+animation_name = "dash"
+fire_animation_name = "fire_dash"
+move_speed = 450.0
+
+[node name="move" type="Node" parent="move_state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "jump_state", "dash_state", "transform_state")]
+script = ExtResource("11_h0mtj")
+fall_state = NodePath("../fall")
+idle_state = NodePath("../idle")
+jump_state = NodePath("../jump")
+dash_state = NodePath("../dash")
+transform_state = NodePath("../transform")
+animation_name = "run"
+fire_animation_name = "fire_run"
+
+[node name="double_jump" type="Node" parent="move_state_machine" node_paths=PackedStringArray("fall_state", "move_state", "idle_state", "dash_state")]
+script = ExtResource("13_h0mtj")
+fall_state = NodePath("../fall")
+move_state = NodePath("../move")
+idle_state = NodePath("../idle")
+dash_state = NodePath("../dash")
+animation_name = "jump"
+fire_animation_name = "fire_jump"
+move_speed = 150.0
+
+[node name="transform" type="Node" parent="move_state_machine" node_paths=PackedStringArray("idle", "jump_state", "fall_state", "move_state", "dash_state")]
+script = ExtResource("14_po5r7")
+idle = NodePath("../idle")
+jump_state = NodePath("../jump")
+fall_state = NodePath("../fall")
+move_state = NodePath("../move")
+dash_state = NodePath("../dash")
+animation_name = "transform"
+fire_animation_name = "fire_transform"
+
+[node name="death" type="Node" parent="move_state_machine"]
+script = ExtResource("15_ucr0r")
+animation_name = "death"
+fire_animation_name = "fire_death"
+
+[node name="hit" type="Node" parent="move_state_machine" node_paths=PackedStringArray("idle", "jump_state", "fall_state", "move_state", "dash_state", "transform")]
+script = ExtResource("15_ssbp6")
+idle = NodePath("../idle")
+jump_state = NodePath("../jump")
+fall_state = NodePath("../fall")
+move_state = NodePath("../move")
+dash_state = NodePath("../dash")
+transform = NodePath("../transform")
+animation_name = "hit"
+fire_animation_name = "fire_hit"
+move_speed = 10.0
+
+[node name="attack_state_machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_kly25")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("attack1", "jump_attack")]
+script = ExtResource("17_ec1dl")
+attack1 = NodePath("../attack1")
+jump_attack = NodePath("../jump_attack")
+animation_name = "idle"
+fire_animation_name = "fire_idle"
+
+[node name="attack1" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("attack2", "jump_attack", "idle")]
+script = ExtResource("18_k1prj")
+attack2 = NodePath("../attack2")
+jump_attack = NodePath("../jump_attack")
+idle = NodePath("../idle")
+attack_buffer_time = 0.2
+animation_name = "attack1"
+fire_animation_name = "fire_attack1"
+
+[node name="attack2" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("attack3", "jump_attack", "idle")]
+script = ExtResource("19_o4dim")
+attack3 = NodePath("../attack3")
+jump_attack = NodePath("../jump_attack")
+idle = NodePath("../idle")
+attack_buffer_time = 0.2
+animation_name = "attack2"
+fire_animation_name = "fire_attack2"
+
+[node name="attack3" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("jump_attack", "idle")]
+script = ExtResource("20_gh1gt")
+jump_attack = NodePath("../jump_attack")
+idle = NodePath("../idle")
+animation_name = "attack3"
+fire_animation_name = "fire_attack3"
+
+[node name="jump_attack" type="Node" parent="attack_state_machine" node_paths=PackedStringArray("idle", "attack1")]
+script = ExtResource("21_xrg5s")
+idle = NodePath("../idle")
+attack1 = NodePath("../attack1")
+animation_name = "jump_attack"
+fire_animation_name = "fire_jump_attack"
+
+[node name="dash_cooldown" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="HUD" parent="." instance=ExtResource("22_k1prj")]
+offset_left = 520.0
+offset_top = 340.0
+offset_right = 520.0
+offset_bottom = 340.0
+
+[connection signal="animation_finished" from="animation" to="." method="_on_animation_death_finished"]
+[connection signal="animation_finished" from="animation" to="move_state_machine/transform" method="_on_animation_transform_finished"]
+[connection signal="animation_finished" from="animation" to="move_state_machine/hit" method="_on_animation_hit_finished"]
+[connection signal="animation_finished" from="sword_animation" to="attack_state_machine/attack1" method="_on_animation_attack1_finished"]
+[connection signal="animation_finished" from="sword_animation" to="attack_state_machine/attack2" method="_on_animation_attack2_finished"]
+[connection signal="animation_finished" from="sword_animation" to="attack_state_machine/attack3" method="_on_animation_attack3_finished"]
+[connection signal="animation_finished" from="sword_animation" to="attack_state_machine/jump_attack" method="_on_animation_jump_attack_finished"]
+[connection signal="area_entered" from="sword_collision" to="sword_collision" method="_on_area_entered"]
+[connection signal="body_entered" from="sword_collision" to="sword_collision" method="_on_body_entered"]
+[connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]

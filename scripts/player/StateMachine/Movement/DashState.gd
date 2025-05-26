@@ -34,7 +34,6 @@ func process_physics(_delta: float) -> State:
 	await(get_tree().create_timer(dash_time).timeout)
 	dashing = false
 	
-	
 	if !dashing and !parent.dead:
 		parent.dash_cooldown.start()
 		parent.is_dash_cooldown = true

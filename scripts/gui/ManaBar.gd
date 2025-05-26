@@ -7,7 +7,7 @@ func _ready() -> void:
 	total_mana = 100
 	self.value = Data.player_mana
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	self.value = Data.player_mana
 	if self.value > total_mana:
 		self.value = total_mana

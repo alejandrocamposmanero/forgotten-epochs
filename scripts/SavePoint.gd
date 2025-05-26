@@ -1,7 +1,7 @@
 extends Node
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$key.visible = Data.can_save
 
 func save_level(level: String) -> void:

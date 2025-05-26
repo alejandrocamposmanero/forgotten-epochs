@@ -1,10 +1,80 @@
-[gd_scene load_steps=5 format=3 uid="uid://20xbjiy7rthm"]
+[gd_scene load_steps=15 format=3 uid="uid://20xbjiy7rthm"]
 
 [ext_resource type="PackedScene" uid="uid://b4f8e8txjnn5e" path="res://scenes/gui/health_bar.tscn" id="1_624ws"]
 [ext_resource type="Script" uid="uid://bol508wdgr53b" path="res://scripts/gui/Hud.gd" id="1_qxonp"]
 [ext_resource type="PackedScene" uid="uid://0f4k7kkfpsad" path="res://scenes/gui/mana_bar.tscn" id="2_qxonp"]
+[ext_resource type="Texture2D" uid="uid://cje7qgi6gh16k" path="res://assets/sprites/props/save_point_anim_strip_9.png" id="4_ueg55"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aoesn"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(0, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pnwd"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(12, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbuxp"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(24, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2b3sj"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(36, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmity"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(48, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q232d"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(60, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggjrh"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(72, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6101d"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(84, 0, 12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_is1ux"]
+atlas = ExtResource("4_ueg55")
+region = Rect2(96, 0, 12, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qxonp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aoesn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pnwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbuxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2b3sj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmity")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q232d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggjrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6101d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_is1ux")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -35,4 +105,13 @@ scale = Vector2(2, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer"]
 visible = false
+position = Vector2(1015, 657)
+scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_qxonp")
+autoplay = "default"
+frame = 8
+frame_progress = 1.0
+
+[node name="saving" type="Timer" parent="."]
+
+[connection signal="timeout" from="saving" to="." method="_on_saving_timeout"]

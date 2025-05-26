@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://0c86sankb0mq"]
+[gd_scene load_steps=25 format=3 uid="uid://0c86sankb0mq"]
 
 [ext_resource type="Script" uid="uid://cd4j8lcqx5wja" path="res://scripts/player/Player.gd" id="1_3v2ag"]
 [ext_resource type="SpriteFrames" uid="uid://60jyjtnuvjxc" path="res://assets/sprites/player/player_move.tres" id="2_60mlk"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://djhcc6mius7mo" path="res://scripts/player/StateMachine/Movement/MoveState.gd" id="18_fulsm"]
 [ext_resource type="Script" uid="uid://ddobhpf82ecln" path="res://scripts/player/StateMachine/Movement/DoubleJumpState.gd" id="19_4r5pv"]
 [ext_resource type="Script" uid="uid://dkq1crtk6x5jr" path="res://scripts/player/MoveComponent.gd" id="20_60mlk"]
+[ext_resource type="PackedScene" uid="uid://20xbjiy7rthm" path="res://scenes/gui/hud.tscn" id="21_i4ail"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jej6c"]
 radius = 2.4
@@ -218,13 +219,19 @@ script = ExtResource("14_a8ls1")
 idle = NodePath("../idle")
 attack1 = NodePath("../attack1")
 animation_name = "jump_attack"
-fire_animation_name = "fire_attack2"
+fire_animation_name = "fire_jump_attack"
 
 [node name="input_component" type="Node" parent="."]
 script = ExtResource("20_60mlk")
 
 [node name="dash_cooldown" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="HUD" parent="." instance=ExtResource("21_i4ail")]
+offset_left = 520.0
+offset_top = 340.0
+offset_right = 520.0
+offset_bottom = 340.0
 
 [connection signal="animation_finished" from="animation" to="." method="_on_animation_death_finished" flags=6]
 [connection signal="animation_finished" from="animation" to="move_state_machine/transform" method="_on_animation_transform_finished"]

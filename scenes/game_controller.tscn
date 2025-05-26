@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cadejcixsfig"]
 
 [ext_resource type="Script" uid="uid://cgf026hcpfjsn" path="res://scripts/GameController.gd" id="1_vq0e2"]
+[ext_resource type="PackedScene" uid="uid://bvrcb1r8nhgka" path="res://scenes/gui/level_transition.tscn" id="2_rc0pn"]
 [ext_resource type="PackedScene" uid="uid://bntresq1f6yqu" path="res://scenes/gui/main_ui.tscn" id="2_vc4nx"]
-[ext_resource type="PackedScene" uid="uid://20xbjiy7rthm" path="res://scenes/gui/hud.tscn" id="3_ts4rt"]
 
 [node name="game_controller" type="Node" node_paths=PackedStringArray("world_2d", "gui")]
 script = ExtResource("1_vq0e2")
@@ -30,6 +30,9 @@ size_flags_vertical = 4
 [node name="UI" parent="gui" instance=ExtResource("2_vc4nx")]
 layout_mode = 1
 
-[node name="HUD" parent="gui" instance=ExtResource("3_ts4rt")]
-visible = false
-layout_mode = 1
+[node name="level_transition" parent="." instance=ExtResource("2_rc0pn")]
+z_index = 1000
+offset_left = 520.0
+offset_top = 340.0
+offset_right = 520.0
+offset_bottom = 340.0
