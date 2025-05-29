@@ -37,7 +37,7 @@ func process_frame(delta: float)-> State:
 
 func process_physics(_delta: float) -> State:
 	if parent.is_on_floor():
-		if attack_buffer_time > 0:
+		if attack_buffer_timer > 0:
 			return attack1
 		return idle
 	return null

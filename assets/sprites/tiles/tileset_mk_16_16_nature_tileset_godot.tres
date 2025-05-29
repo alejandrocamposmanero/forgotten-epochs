@@ -4512,7 +4512,7 @@ texture = ExtResource("1_ykk50")
 8:24/0/terrains_peering_bit/top_side = 11
 
 [resource]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 255
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "dirt"
 terrain_set_0/terrain_0/color = Color(0.178448, 0.375504, 0.684381, 1)

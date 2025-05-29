@@ -1,11 +1,15 @@
-[gd_scene load_steps=33 format=3 uid="uid://xmht07h0rma5"]
+[gd_scene load_steps=35 format=3 uid="uid://xmht07h0rma5"]
 
-[ext_resource type="Script" uid="uid://c7wghc5y4cu6i" path="res://scripts/enemies/goblin/Goblin.gd" id="1_n7kle"]
+[ext_resource type="Script" uid="uid://bqjbfq72ic8jq" path="res://scenes/enemies/goblin.gd" id="1_n7kle"]
 [ext_resource type="Texture2D" uid="uid://by2qgohyx2v1r" path="res://assets/sprites/enemies/goblin/goblin_attack_anim_strip_4.png" id="2_oth3g"]
 [ext_resource type="Texture2D" uid="uid://bpa3mn2mthyst" path="res://assets/sprites/enemies/goblin/goblin_death_anim_strip_6.png" id="3_xkrhs"]
 [ext_resource type="Texture2D" uid="uid://dacup6jv5acs6" path="res://assets/sprites/enemies/goblin/goblin_hit_anim_strip_3.png" id="4_s0g86"]
 [ext_resource type="Texture2D" uid="uid://blsisjs4bb5j3" path="res://assets/sprites/enemies/goblin/goblin_idle_anim_strip_4.png" id="5_ddai1"]
 [ext_resource type="Texture2D" uid="uid://do7o6xnfumhky" path="res://assets/sprites/enemies/goblin/goblin_run_anim_strip_6.png" id="6_0k1hm"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lyvjc"]
+radius = 6.0
+height = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ikdmk"]
 atlas = ExtResource("2_oth3g")
@@ -114,7 +118,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_at850")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 5.0
 }, {
@@ -196,33 +200,50 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lyvjc"]
-radius = 6.0
-height = 16.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e57hx"]
 radius = 2.0
 height = 18.0
 
-[node name="goblin" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n7kle"]
+radius = 13.0
+height = 130.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oth3g"]
+height = 48.0
+
+[node name="goblin" type="CharacterBody2D"]
 script = ExtResource("1_n7kle")
+metadata/_custom_type_script = "uid://dswangjhg0wat"
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("CapsuleShape2D_lyvjc")
 
 [node name="animation" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_t0774")
-animation = &"attack"
-frame = 2
+animation = &"idle"
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
+[node name="hitboxes" type="Area2D" parent="."]
+collision_layer = 3
 collision_mask = 2
 
-[node name="enemy" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -8)
-shape = SubResource("CapsuleShape2D_lyvjc")
-
-[node name="enemy_attack" type="CollisionShape2D" parent="Area2D"]
+[node name="enemy_attack" type="CollisionShape2D" parent="hitboxes"]
 position = Vector2(3, -5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e57hx")
 disabled = true
+
+[node name="player_detection" type="Area2D" parent="."]
+
+[node name="follow_player" type="CollisionShape2D" parent="player_detection"]
+position = Vector2(0, -8)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_n7kle")
+
+[node name="player_attack" type="Area2D" parent="."]
+
+[node name="attack_player" type="CollisionShape2D" parent="player_attack"]
+position = Vector2(0, -8)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_oth3g")

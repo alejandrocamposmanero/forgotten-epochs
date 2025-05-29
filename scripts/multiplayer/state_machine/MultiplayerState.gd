@@ -1,8 +1,6 @@
 class_name MultiplayerState
 extends Node
 
-signal state_entered
-
 @export
 var animation_name: String
 @export

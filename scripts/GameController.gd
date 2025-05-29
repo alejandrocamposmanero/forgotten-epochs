@@ -63,7 +63,7 @@ func change_2d_scene(new_scene: String, deferred: bool = false, delete: bool = t
 		current_2d_scene = null
 
 func save_last_level_position(level_to_level: String, position) -> void:
-	var save_file = FileAccess.open("res://saved_data/levels_last_positions.csv", FileAccess.WRITE_READ)
+	var save_file = FileAccess.open("user://saved_data/levels_last_positions.csv", FileAccess.WRITE_READ)
 	var content = PackedStringArray([level_to_level, str(position.x), str(position.y)])
 	while !save_file.eof_reached():
 		var read_line = save_file.get_csv_line()
@@ -75,9 +75,9 @@ func save_last_level_position(level_to_level: String, position) -> void:
 	Data.level_last_position[level_to_level] = position
 
 func load_last_level_position():
-	if !FileAccess.file_exists("res://saved_data/levels_last_positions.csv"):
+	if !FileAccess.file_exists("user://saved_data/levels_last_positions.csv"):
 		return
-	var save_file = FileAccess.open("res://saved_data/levels_last_positions.csv", FileAccess.READ)
+	var save_file = FileAccess.open("user://saved_data/levels_last_positions.csv", FileAccess.READ)
 	var level_positions = {}
 	while !save_file.eof_reached():
 		var read_line = save_file.get_csv_line()
@@ -86,14 +86,14 @@ func load_last_level_position():
 	return level_positions
 
 func save_game(level: String) -> void:
-	var save_file = FileAccess.open("res://saved_data/savefile.csv", FileAccess.WRITE_READ)
+	var save_file = FileAccess.open("user://saved_data/savefile.csv", FileAccess.WRITE_READ)
 	var current_level = Data.level_files[level]
 	var content = PackedStringArray([current_level,str(Data.player_posx),str(Data.player_posy)])
 	save_file.store_csv_line(content)
 
 func load_game() -> void:
-	var save_file = FileAccess.open("res://saved_data/savefile.csv", FileAccess.READ)
-	if !FileAccess.file_exists("res://saved_data/savefile.csv"):
+	var save_file = FileAccess.open("user://saved_data/savefile.csv", FileAccess.READ)
+	if !FileAccess.file_exists("user://saved_data/savefile.csv"):
 		return
 	var content = save_file.get_csv_line()
 	start_transition()

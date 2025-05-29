@@ -1,7 +1,9 @@
 extends State
 
 @onready 
-var collision: CollisionPolygon2D = $"../../sword_collision/attack2"
+var collision_right: CollisionPolygon2D = $"../../sword_collision/attack2_right"
+@onready 
+var collision_left: CollisionPolygon2D = $"../../sword_collision/attack2_left"
 
 @export
 var attack3 : State
@@ -17,7 +19,10 @@ var attack_buffer_timer : float
 func enter() -> void:
 	super()
 	parent.sword_visible()
-	collision.set_deferred("disabled", false)
+	if parent.animation.flip_h:
+		collision_left.set_deferred("disabled", false)
+	else:
+		collision_right.set_deferred("disabled", false)
 	attack_buffer_timer = attack_buffer_time
 	parent.attack_number = 2
 	parent.attacking = true
@@ -44,4 +49,5 @@ func process_physics(_delta: float) -> State:
 func _on_animation_attack2_finished() -> void:
 	parent.attacking = false
 	if parent.sword_animation.animation == "attack2" or parent.sword_animation.animation == "fire_attack2":
-		collision.set_deferred("disabled", true)
+		collision_right.set_deferred("disabled", true)
+		collision_left.set_deferred("disabled", true)

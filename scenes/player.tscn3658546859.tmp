@@ -174,7 +174,7 @@ fire_animation_name = "fire_death"
 
 [node name="hit" type="Node" parent="move_state_machine" node_paths=PackedStringArray("idle", "jump_state", "fall_state", "move_state", "dash_state", "transform")]
 script = ExtResource("14_60mlk")
-idle = NodePath("../idle")
+idle = NodePath("../../attack_state_machine/idle")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
 move_state = NodePath("../dash")

@@ -30,6 +30,7 @@ limit_right = 900
 
 [node name="to_tutorial" type="Area2D" parent="."]
 position = Vector2(-49, 255)
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="to_tutorial"]
 position = Vector2(19, -58)
@@ -37,6 +38,7 @@ shape = SubResource("RectangleShape2D_qhf3p")
 
 [node name="to_second_level" type="Area2D" parent="."]
 position = Vector2(943, 263)
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="to_second_level"]
 shape = SubResource("RectangleShape2D_qhf3p")

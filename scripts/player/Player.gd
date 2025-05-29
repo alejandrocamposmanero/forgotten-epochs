@@ -26,9 +26,9 @@ var transformed := false
 @export
 var damage : int = 10
 @export
-var health: int = 100
+var health: int
 @export
-var mana: float = 100
+var mana: float
 
 var attack_number := 0
 var jump_number := 0
@@ -37,6 +37,8 @@ var can_dash := true
 var is_dash_cooldown := false
 var dead := false
 var attacking := false
+
+var collisions_flipped := false
 
 func sword_visible() -> void:
 	sword_animation.visible = true
@@ -54,6 +56,8 @@ func receive_damage(damage_done: int) -> void:
 		move_state_machine.change_state(hit_state)
 	
 func _ready() -> void:
+	health = Data.player_health
+	mana = Data.player_mana
 	transformed = Data.transformed
 	dead = false
 	move_state_machine.init(self, animation, move_component)
@@ -74,6 +78,10 @@ func _process(delta: float) -> void:
 	move_state_machine.process_frame(delta)
 	attack_state_machine.process_frame(delta)
 	sword_animation.flip_h = animation.flip_h
+	if animation.flip_h and !collisions_flipped:
+		flip_collisions()
+	elif !animation.flip_h and collisions_flipped:
+		flip_collisions()
 	Data.player_health = health
 	Data.player_mana = mana
 	if Data.can_save:
@@ -89,3 +97,13 @@ func _on_dash_cooldown_timeout() -> void:
 
 func _on_animation_death_finished() -> void:
 	player_death.emit()
+
+func flip_collisions():
+	$sword_collision/attack1.position.x *= -1
+	$sword_collision/jump_attack.position.x *= -1
+	collisions_flipped = !collisions_flipped
+
+func _on_sword_collision_body_entered(body: Node2D) -> void:
+	if body is Enemy:
+		body.receive_damage(damage)
+		print("aaaa")
