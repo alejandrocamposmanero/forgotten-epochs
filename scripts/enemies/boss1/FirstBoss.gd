@@ -50,15 +50,21 @@ func _physics_process(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y += gravity * delta
 		velocity.x = 0
+		if dead:
+			velocity.y = 0
 	elif !dead:
 		if !attacking:
-			if position.x > player.position.x:
+			if position.x == player.position.x:
+				velocity.x = 0
+				animation.play("idle")
+			elif position.x > player.position.x:
 				velocity.x = speed * -1
 				animation.flip_h = true
+				animation.play("run")
 			elif position.x < player.position.x:
 				velocity.x = speed
 				animation.flip_h = false
-			animation.play("run")
+				animation.play("run")
 		elif first_attack and attack_ready:
 			velocity.x = 0
 			animation.play("attack1")
@@ -103,7 +109,6 @@ func _on_cooldown_timeout() -> void:
 func _on_attacks_collision_body_entered(body: Node2D) -> void:
 	if body is Player:
 		body.receive_damage(damage)
-		print(body.health)
 
 func _on_animation_frame_changed() -> void:
 	if animation.animation == "attack1":

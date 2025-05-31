@@ -11,6 +11,7 @@ var player_posy: float
 var can_save: bool = false
 var loaded_game: bool = false
 var level_changed: bool = false
+var saved_game: bool = false
 
 var level_last_position = {}
 var level_files = {}

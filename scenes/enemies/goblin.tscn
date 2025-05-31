@@ -1,11 +1,12 @@
-[gd_scene load_steps=35 format=3 uid="uid://xmht07h0rma5"]
+[gd_scene load_steps=36 format=3 uid="uid://xmht07h0rma5"]
 
-[ext_resource type="Script" uid="uid://bqjbfq72ic8jq" path="res://scenes/enemies/goblin.gd" id="1_n7kle"]
+[ext_resource type="Script" uid="uid://c7wghc5y4cu6i" path="res://scripts/enemies/goblin/Goblin.gd" id="1_n7kle"]
 [ext_resource type="Texture2D" uid="uid://by2qgohyx2v1r" path="res://assets/sprites/enemies/goblin/goblin_attack_anim_strip_4.png" id="2_oth3g"]
 [ext_resource type="Texture2D" uid="uid://bpa3mn2mthyst" path="res://assets/sprites/enemies/goblin/goblin_death_anim_strip_6.png" id="3_xkrhs"]
 [ext_resource type="Texture2D" uid="uid://dacup6jv5acs6" path="res://assets/sprites/enemies/goblin/goblin_hit_anim_strip_3.png" id="4_s0g86"]
 [ext_resource type="Texture2D" uid="uid://blsisjs4bb5j3" path="res://assets/sprites/enemies/goblin/goblin_idle_anim_strip_4.png" id="5_ddai1"]
 [ext_resource type="Texture2D" uid="uid://do7o6xnfumhky" path="res://assets/sprites/enemies/goblin/goblin_run_anim_strip_6.png" id="6_0k1hm"]
+[ext_resource type="PackedScene" uid="uid://b3dhjj215b75l" path="res://scenes/gui/boss_health_bar.tscn" id="7_oth3g"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lyvjc"]
 radius = 6.0
@@ -196,23 +197,30 @@ animations = [{
 "texture": SubResource("AtlasTexture_hssac")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"run",
 "speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e57hx"]
 radius = 2.0
-height = 18.0
+height = 22.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n7kle"]
-radius = 13.0
+radius = 41.0
 height = 130.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oth3g"]
-height = 48.0
+height = 34.0
 
 [node name="goblin" type="CharacterBody2D"]
+z_index = -1
+scale = Vector2(2, 2)
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_n7kle")
+max_health = 20
+speed = 100.0
+damage = 5
 metadata/_custom_type_script = "uid://dswangjhg0wat"
 
 [node name="collision" type="CollisionShape2D" parent="."]
@@ -222,28 +230,61 @@ shape = SubResource("CapsuleShape2D_lyvjc")
 [node name="animation" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_t0774")
-animation = &"idle"
+animation = &"hit"
 
 [node name="hitboxes" type="Area2D" parent="."]
-collision_layer = 3
+collision_layer = 4
 collision_mask = 2
 
 [node name="enemy_attack" type="CollisionShape2D" parent="hitboxes"]
-position = Vector2(3, -5)
+position = Vector2(5, -5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e57hx")
 disabled = true
 
 [node name="player_detection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="follow_player" type="CollisionShape2D" parent="player_detection"]
-position = Vector2(0, -8)
+position = Vector2(0, -30.5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_n7kle")
 
 [node name="player_attack" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="attack_player" type="CollisionShape2D" parent="player_attack"]
-position = Vector2(0, -8)
+position = Vector2(10, -8)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_oth3g")
+
+[node name="cooldown" type="Timer" parent="."]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="health_bar" parent="Control" node_paths=PackedStringArray("boss") instance=ExtResource("7_oth3g")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.5
+offset_top = -28.5
+offset_right = 3.5
+offset_bottom = 11.5
+grow_horizontal = 2
+scale = Vector2(0.25, 0.25)
+size_flags_vertical = 4
+boss = NodePath("../..")
+
+[connection signal="animation_finished" from="animation" to="." method="_on_animation_finished"]
+[connection signal="body_entered" from="hitboxes" to="." method="_on_attack_body_entered"]
+[connection signal="body_entered" from="player_detection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="player_detection" to="." method="_on_player_detection_body_exited"]
+[connection signal="body_entered" from="player_attack" to="." method="_on_player_attack_body_entered"]
+[connection signal="timeout" from="cooldown" to="." method="_on_cooldown_timeout"]

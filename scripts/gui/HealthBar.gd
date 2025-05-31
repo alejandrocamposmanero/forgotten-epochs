@@ -4,7 +4,8 @@ class_name HealthBar
 var total_health: int
 
 func _ready() -> void:
-	total_health = 100
+	total_health = Data.total_health
+	self.max_value = total_health
 	self.value = Data.player_health
 
 func _process(_delta: float) -> void:

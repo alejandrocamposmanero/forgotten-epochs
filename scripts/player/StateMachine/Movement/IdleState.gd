@@ -16,7 +16,6 @@ func enter() -> void:
 	super()
 	parent.jump_number = 0
 	parent.velocity.x = 0
-	print("idle de nuevo")
 
 func process_input() -> State:
 	if move_component.wants_jump() and parent.is_on_floor() and !parent.attacking:

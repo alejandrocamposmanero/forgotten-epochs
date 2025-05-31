@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://m6yminfgoutv"]
+[gd_scene load_steps=9 format=4 uid="uid://m6yminfgoutv"]
 
 [ext_resource type="TileSet" uid="uid://dvjhldmeg56tb" path="res://assets/sprites/props/caves_props.tres" id="1_r7qys"]
 [ext_resource type="PackedScene" uid="uid://bmmud7hhjo011" path="res://scenes/levels/parallax.tscn" id="1_xbibw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cngb5x8dbqg8t" path="res://scenes/camera_2d.tscn" id="3_hkalp"]
 [ext_resource type="PackedScene" uid="uid://etbuf7okww7r" path="res://scenes/save_point.tscn" id="3_qhf3p"]
 [ext_resource type="Script" uid="uid://c4njxeu6115ny" path="res://scripts/levels/FirstLevel.gd" id="3_xbibw"]
+[ext_resource type="PackedScene" uid="uid://xmht07h0rma5" path="res://scenes/enemies/goblin.tscn" id="7_3kh8m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhf3p"]
 size = Vector2(50, 134)
@@ -42,6 +43,9 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="to_second_level"]
 shape = SubResource("RectangleShape2D_qhf3p")
+
+[node name="goblin" parent="." instance=ExtResource("7_3kh8m")]
+position = Vector2(563, 362)
 
 [connection signal="body_entered" from="to_tutorial" to="." method="_on_to_tutorial_body_entered"]
 [connection signal="body_entered" from="to_second_level" to="." method="_on_to_second_level_body_entered"]

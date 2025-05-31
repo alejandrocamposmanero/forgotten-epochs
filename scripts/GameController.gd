@@ -90,11 +90,12 @@ func save_game(level: String) -> void:
 	var current_level = Data.level_files[level]
 	var content = PackedStringArray([current_level,str(Data.player_posx),str(Data.player_posy)])
 	save_file.store_csv_line(content)
+	Data.saved_game = true
 
-func load_game() -> void:
+func load_game() -> bool:
 	var save_file = FileAccess.open("user://saved_data/savefile.csv", FileAccess.READ)
 	if !FileAccess.file_exists("user://saved_data/savefile.csv"):
-		return
+		return false
 	var content = save_file.get_csv_line()
 	start_transition()
 	change_2d_scene(content[0])
@@ -104,6 +105,7 @@ func load_game() -> void:
 	Data.player_posy = float(content[2])
 	Data.loaded_game = true
 	end_transition()
+	return true
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause") and (current_gui_scene == null or current_gui_scene.name != "UI"):

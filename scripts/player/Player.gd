@@ -72,7 +72,10 @@ func _physics_process(delta: float) -> void:
 	attack_state_machine.process_physics(delta)
 	Data.transformed = transformed
 	if transformed:
+		damage = 20
 		mana -= delta
+	else:
+		damage = 10
 
 func _process(delta: float) -> void:
 	move_state_machine.process_frame(delta)
@@ -91,12 +94,26 @@ func _process(delta: float) -> void:
 		position.x = Data.player_posx
 		position.y = Data.player_posy
 		Data.loaded_game = false
+	if Data.saved_game:
+		health = Data.total_health
+		Data.player_health = health
+		mana = Data.total_mana
+		Data.player_mana = mana
+		Data.saved_game = false
 
 func _on_dash_cooldown_timeout() -> void:
 	is_dash_cooldown = false
 
 func _on_animation_death_finished() -> void:
-	player_death.emit()
+	if animation.animation == "death":
+		player_death.emit()
+		health = Data.total_health
+		Data.player_health = Data.total_health
+		if !Global.game_controller.load_game():
+			Global.game_controller.start_transition()
+			Global.game_controller.change_2d_scene("")
+			Global.game_controller.change_2d_scene("res://scenes/levels/tutorial.tscn")
+			Global.game_controller.end_transition()
 
 func flip_collisions():
 	$sword_collision/attack1.position.x *= -1

@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://d0mbry7ywfa4u"]
+[gd_scene load_steps=8 format=4 uid="uid://d0mbry7ywfa4u"]
 
 [ext_resource type="PackedScene" uid="uid://bmmud7hhjo011" path="res://scenes/levels/parallax.tscn" id="1_7ac3l"]
 [ext_resource type="TileSet" uid="uid://bfdj1xoof2kl7" path="res://assets/sprites/tiles/tileset_mk_16_16_nature_tileset_godot.tres" id="5_84vya"]
 [ext_resource type="PackedScene" uid="uid://etbuf7okww7r" path="res://scenes/save_point.tscn" id="6_7ac3l"]
 [ext_resource type="PackedScene" uid="uid://0c86sankb0mq" path="res://scenes/player.tscn" id="6_cw4as"]
 [ext_resource type="PackedScene" uid="uid://cngb5x8dbqg8t" path="res://scenes/camera_2d.tscn" id="7_4o3hj"]
-[ext_resource type="PackedScene" uid="uid://dnfroln7v7s3o" path="res://scenes/enemies/first_boss.tscn" id="7_iig34"]
 [ext_resource type="Script" uid="uid://gauwxvs04c7u" path="res://scripts/levels/Tutorial.gd" id="9_l8ohl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m62tc"]
@@ -37,9 +36,5 @@ shape = SubResource("RectangleShape2D_m62tc")
 
 [node name="save_point" parent="." instance=ExtResource("6_7ac3l")]
 position = Vector2(1019, 397)
-
-[node name="boss2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_iig34")]
-position = Vector2(734, 259)
-player = NodePath("../player")
 
 [connection signal="body_entered" from="level_change" to="." method="_on_level_change_body_entered"]

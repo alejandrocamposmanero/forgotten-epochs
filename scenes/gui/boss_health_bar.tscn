@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4f8e8txjnn5e"]
+[gd_scene load_steps=5 format=3 uid="uid://b3dhjj215b75l"]
 
-[ext_resource type="Texture2D" uid="uid://c6g5ia6tglkpg" path="res://assets/sprites/ui/health_bar.png" id="1_sg1dr"]
-[ext_resource type="Texture2D" uid="uid://nx0iallafjxr" path="res://assets/sprites/ui/health.png" id="2_bk5rd"]
-[ext_resource type="Script" uid="uid://br8a4uut5f8bv" path="res://scripts/gui/HealthBar.gd" id="2_lspkh"]
+[ext_resource type="Texture2D" uid="uid://c6g5ia6tglkpg" path="res://assets/sprites/ui/health_bar.png" id="1_h77m4"]
+[ext_resource type="Script" uid="uid://dol87jvd86twp" path="res://scripts/gui/HealthBarController.gd" id="1_rsovm"]
+[ext_resource type="Texture2D" uid="uid://nx0iallafjxr" path="res://assets/sprites/ui/health.png" id="2_2l7yo"]
+[ext_resource type="Script" uid="uid://dn55xgr7vvefh" path="res://scripts/gui/BossHealthBar.gd" id="3_2l7yo"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_rsovm")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 z_index = 99
@@ -22,14 +24,14 @@ offset_left = 2.8
 offset_top = 5.0
 offset_right = 146.8
 offset_bottom = 37.0
-texture = ExtResource("1_sg1dr")
+texture = ExtResource("1_h77m4")
 patch_margin_left = 35
 patch_margin_top = 7
 patch_margin_right = 45
 patch_margin_bottom = 9
 axis_stretch_vertical = 2
 
-[node name="health_bar" type="TextureProgressBar" parent="."]
+[node name="boss_health_bar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("controller")]
 z_index = 200
 clip_contents = true
 layout_mode = 0
@@ -44,6 +46,7 @@ stretch_margin_left = 35
 stretch_margin_top = 7
 stretch_margin_right = 45
 stretch_margin_bottom = 9
-texture_progress = ExtResource("2_bk5rd")
+texture_progress = ExtResource("2_2l7yo")
 texture_progress_offset = Vector2(0, 3)
-script = ExtResource("2_lspkh")
+script = ExtResource("3_2l7yo")
+controller = NodePath("..")

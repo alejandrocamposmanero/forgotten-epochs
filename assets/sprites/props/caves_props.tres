@@ -1591,7 +1591,7 @@ texture = ExtResource("3_lbx87")
 
 [resource]
 uv_clipping = true
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 255
 sources/0 = SubResource("TileSetAtlasSource_c1580")
 sources/1 = SubResource("TileSetAtlasSource_gh0yb")
 sources/3 = SubResource("TileSetAtlasSource_8ck16")

@@ -33,19 +33,19 @@ height = 32.0
 radius = 13.0
 
 [node name="player" type="CharacterBody2D" node_paths=PackedStringArray("death_state", "hit_state")]
-collision_layer = 6
+collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_3v2ag")
 death_state = NodePath("move_state_machine/death")
 hit_state = NodePath("move_state_machine/hit")
 
 [node name="animation" type="AnimatedSprite2D" parent="."]
-visible = false
 texture_filter = 1
 sprite_frames = ExtResource("2_60mlk")
 animation = &"fire_fall"
 
 [node name="sword_animation" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = ExtResource("3_i4ail")
 animation = &"attack3"
 frame = 2
