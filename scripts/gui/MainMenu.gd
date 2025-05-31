@@ -4,9 +4,12 @@ extends Control
 var play: Button = $CanvasLayer/PanelContainer/VBoxContainer/Play
 @onready 
 var load_button: Button = $CanvasLayer/PanelContainer/VBoxContainer/Load
+@onready 
+var options: Button = $CanvasLayer/PanelContainer/VBoxContainer/Options
 
 func _ready() -> void:
 	play.grab_focus()
+	options.disabled = true
 	if !FileAccess.file_exists("user://saved_data/savefile.csv"):
 		load_button.disabled = true
 

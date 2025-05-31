@@ -2,9 +2,12 @@ extends Control
 
 @onready
 var resume : Button = $CanvasLayer/PanelContainer/VBoxContainer/Resume
-# Called when the node enters the scene tree for the first time.
+@onready 
+var options: Button = $CanvasLayer/PanelContainer/VBoxContainer/Options
+
 func _ready() -> void:
 	resume.grab_focus()
+	options.disabled = true
 	get_tree().paused = true
 
 func _process(_delta: float) -> void:
