@@ -105,7 +105,7 @@ func _on_dash_cooldown_timeout() -> void:
 	is_dash_cooldown = false
 
 func _on_animation_death_finished() -> void:
-	if animation.animation == "death":
+	if animation.animation == "death" or animation.animation == "fire_death":
 		player_death.emit()
 		health = Data.total_health
 		Data.player_health = Data.total_health
@@ -123,4 +123,3 @@ func flip_collisions():
 func _on_sword_collision_body_entered(body: Node2D) -> void:
 	if body is Enemy:
 		body.receive_damage(damage)
-		print("aaaa")

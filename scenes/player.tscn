@@ -42,7 +42,7 @@ hit_state = NodePath("move_state_machine/hit")
 [node name="animation" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("2_60mlk")
-animation = &"fire_fall"
+animation = &"death"
 
 [node name="sword_animation" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -240,7 +240,7 @@ offset_top = 340.0
 offset_right = 520.0
 offset_bottom = 340.0
 
-[connection signal="animation_finished" from="animation" to="." method="_on_animation_death_finished" flags=6]
+[connection signal="animation_finished" from="animation" to="." method="_on_animation_death_finished"]
 [connection signal="animation_finished" from="animation" to="move_state_machine/transform" method="_on_animation_transform_finished"]
 [connection signal="animation_finished" from="animation" to="move_state_machine/hit" method="_on_animation_hit_finished"]
 [connection signal="animation_finished" from="sword_animation" to="attack_state_machine/attack1" method="_on_animation_attack1_finished"]
